@@ -11,4 +11,5 @@ public interface SongService{
     public Song findByTrackId(String trackId);
     Song addRating(Song song, int rating);
     float getSongRating(Song song);
+    Song addNewSong(Song song);
 }

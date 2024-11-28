@@ -14,7 +14,6 @@ public class ArtistRepository {
 
 
     public List<Artist> findAll(){
-        System.out.println(DataHolder.artists);
         return DataHolder.artists;
     }
     public Optional<Artist> findById(Long id){
