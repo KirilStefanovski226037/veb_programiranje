@@ -1,12 +1,14 @@
 package mk.ukim.finki.wp.lab.service.impl;
 
 import mk.ukim.finki.wp.lab.model.Artist;
+import mk.ukim.finki.wp.lab.model.Song;
 import mk.ukim.finki.wp.lab.model.exceptions.ArtistNotFoundException;
-import mk.ukim.finki.wp.lab.repository.ArtistRepository;
+import mk.ukim.finki.wp.lab.repository.jpa.ArtistRepository;
 import mk.ukim.finki.wp.lab.service.ArtistService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ArtistServiceImpl implements ArtistService {
@@ -22,7 +24,21 @@ public class ArtistServiceImpl implements ArtistService {
     }
 
     @Override
-    public Artist findById(Long id) {
-        return artistRepository.findById(id).orElseThrow(()->new ArtistNotFoundException(id));
+    public Optional<Artist> findById(Long id) {
+        return artistRepository.findById(id);
+    }
+
+    @Override
+    public void addSongToArtist(Artist artist, Song song) {
+        artist.getSongs().add(song);
+        artistRepository.save(artist);
+    }
+
+    @Override
+    public void removeSongFromArtists(Long id) {
+        artistRepository.findAll().forEach(artist -> {
+            artist.getSongs().removeIf(song -> song.getId().equals(id));
+            artistRepository.save(artist);
+        });
     }
 }

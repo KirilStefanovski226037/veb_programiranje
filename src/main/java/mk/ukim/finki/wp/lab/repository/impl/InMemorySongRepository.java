@@ -1,16 +1,17 @@
-package mk.ukim.finki.wp.lab.repository;
+package mk.ukim.finki.wp.lab.repository.impl;
 
 import mk.ukim.finki.wp.lab.bootstrap.DataHolder;
+import mk.ukim.finki.wp.lab.model.Artist;
 import mk.ukim.finki.wp.lab.model.Song;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Repository;
-import mk.ukim.finki.wp.lab.model.Artist;
+
 import java.util.List;
 import java.util.Optional;
 
 @Repository
 @DependsOn("dataHolder")
-public class SongRepository {
+public class InMemorySongRepository {
     public List<Song> findAll(){
         return DataHolder.songs;
     }
@@ -21,13 +22,6 @@ public class SongRepository {
         song.getPerformers().removeIf(a->a.getId().equals(artist.getId()));
         song.getPerformers().add(artist);
         return artist;
-    }
-    public float getRating(Song song){
-        return song.getRating();
-    }
-    public Song addRating(Song song,int rating){
-        song.getRatings().add(rating);
-        return song;
     }
 
 }
